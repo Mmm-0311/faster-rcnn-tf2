@@ -1,0 +1,37 @@
+# 训练配置
+train:
+  batch_size: 1
+  learning_rate: 0.001
+  momentum: 0.9
+  weight_decay: 0.0005
+  max_iter: 70000
+  step_size: 30000
+  gamma: 0.1
+
+# 模型配置
+model:
+  backbone: "vgg16"
+  num_classes: 21  # VOC数据集20类+背景
+  rpn_pre_nms_top_n: 12000
+  rpn_post_nms_top_n: 2000
+  rpn_nms_thresh: 0.7
+  roi_pooling_size: 7
+
+# 数据配置
+data:
+  voc_root: "./data/VOCdevkit"
+  pixel_means: [102.9801, 115.9465, 122.7717]  # BGR格式
+#  train_sets: ["VOC_2007_trainval", "VOC_2012_trainval"]
+  train_sets: ["VOC_2007_trainval"]
+  test_sets: ["VOC_2007_test"]
+
+# 输出配置
+output:
+  log_dir: "./logs"
+  checkpoint_dir: "./checkpoints"
+  demo_dir: "./demo"
+
+anchor:
+  feat_stride: 16  # 特征图相对于输入图像的步长（VGG16 下采样 16 倍）
+  scales: [8, 16, 32]  # 锚框尺度
+  ratios: [0.5, 1, 2]  # 锚框宽高比

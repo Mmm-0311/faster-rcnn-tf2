@@ -43,42 +43,6 @@ def visualize_dataset_sample(dataset, num_samples=2):
             plt.show()
 
 
-def test_backbone():
-    # 1. 初始化模型
-    model = VGG16Backbone()
-
-    # 2. 生成测试输入（随机图像，模拟VOC图像尺寸）
-    batch_size = 1
-    H, W = 600, 800  # 典型VOC图像尺寸
-    test_image = tf.random.uniform((batch_size, H, W, 3), dtype=tf.float32)  # 随机图像
-
-    # 3. 前向传播测试
-    outputs = model(test_image, training=False)
-    model.load_pretrained_weights()
-
-    # 4. 验证输出形状
-    feat_map = outputs['feat_map']
-    rpn_cls_prob = outputs['rpn_cls_prob']
-    rpn_bbox_pred = outputs['rpn_bbox_pred']
-
-    # 特征图尺寸应为输入的 1/16（VGG16 下采样 16 倍）
-    assert feat_map.shape[1] == H // 16, f"特征图高度错误：{feat_map.shape[1]} vs {H // 16}"
-    assert feat_map.shape[2] == W // 16, f"特征图宽度错误：{feat_map.shape[2]} vs {W // 16}"
-
-    # RPN分类概率形状：[B, H_feat*W_feat*NUM_ANCHORS, 2]
-    num_anchors_total = (H // 16) * (W // 16) * cfg.num_anchors
-    assert rpn_cls_prob.shape == (batch_size, num_anchors_total, 2), f"RPN分类输出形状错误"
-
-    # RPN边界框偏移形状：[B, H_feat, W_feat, 4*NUM_ANCHORS]
-    assert rpn_bbox_pred.shape == (batch_size, H // 16, W // 16, 4 * cfg.num_anchors), f"RPN回归输出形状错误"
-
-    # 5. 锚框生成测试
-    anchors = generate_anchors()
-    assert anchors.shape == (cfg.num_anchors, 4), f"锚框生成形状错误：{anchors.shape}"
-
-    print("主干网络测试通过！")
-
-
 def main():
     # 加载配置
 
@@ -106,5 +70,4 @@ def main():
 
 
 if __name__ == "__main__":
-    # main()
-    test_backbone()
+    main()

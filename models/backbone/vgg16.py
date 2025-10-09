@@ -39,10 +39,6 @@ class VGG16Backbone(Model):
         self.conv5_2 = layers.Conv2D(512, (3, 3), padding='same', name='conv5_2')
         self.conv5_3 = layers.Conv2D(512, (3, 3), padding='same', name='conv5_3')
 
-        # self.vgg16 = tf.keras.applications.VGG16(include_top=False, weights='imagenet', input_shape=(224, 224, 3))
-        # # 冻结 VGG16 的权重
-        # self.vgg16.trainable = False
-
         # -------------------------- 2. RPN 网络 --------------------------
         # RPN 共享卷积层
         self.rpn_conv = layers.Conv2D(512, (3, 3), padding='same', name='rpn_conv')

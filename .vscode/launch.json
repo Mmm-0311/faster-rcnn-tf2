@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "FasterRCNN - run module",
+        "type": "debugpy",
+        "request": "launch",
+        "module": "models.faster_rcnn",
+        "cwd": "D:\\Codes\\Python\\src\\bzAI\\projects\\faster-rcnn-tf2",
+        "console": "integratedTerminal",
+        "justMyCode": false,
+        "env": {
+          "TF_CPP_MIN_LOG_LEVEL": "1"
+        }
+      }
+    ]
+  }
